@@ -1,6 +1,6 @@
-import { Library } from '../src/library';
+import { Library } from "../src/library";
 
-describe('Library Management System', () => {
+describe("Library Management System", () => {
   let library: Library;
 
   beforeEach(() => {
@@ -8,32 +8,45 @@ describe('Library Management System', () => {
   });
 
   // Test for adding books
-  describe('addBook', () => {
-    it('should add a new book to the library', () => {
-      library.addBook('1234', 'Test Book', 'Author A', 2020);
+  describe("addBook", () => {
+    it("should add a new book to the library", () => {
+      library.addBook("1234", "Test Book", "Author A", 2020);
       expect(library.viewAvailableBooks()).toEqual([
         {
-          isbn: '1234',
-          title: 'Test Book',
-          author: 'Author A',
+          isbn: "1234",
+          title: "Test Book",
+          author: "Author A",
           publicationYear: 2020,
           isAvailable: true,
         },
       ]);
     });
-    it('should not allow adding a book with a duplicate ISBN', () => {
-        library.addBook('1234', 'Test Book', 'Author A', 2020);
-        expect(() => library.addBook('1234', 'Another Book', 'Author B', 2021)).toThrow(
-          'Book with this ISBN already exists.'
-        );
+    it("should not allow adding a book with a duplicate ISBN", () => {
+      library.addBook("1234", "Test Book", "Author A", 2020);
+      expect(() =>
+        library.addBook("1234", "Another Book", "Author B", 2021)
+      ).toThrow("Book with this ISBN already exists.");
     });
   });
 
   // Test for borrowing books
-  describe('borrowBook', () => {
-    it('should throw an error if the book does not exist', () => {
-      expect(() => library.borrowBook('5678')).toThrow('Book not found.');
+  describe("borrowBook", () => {
+    it("should throw an error if the book does not exist", () => {
+      expect(() => library.borrowBook("5678")).toThrow("Book not found.");
+    });
+
+    it("should borrow an available book", () => {
+      library.addBook("1234", "Test Book", "Author A", 2020);
+      library.borrowBook("1234");
+      expect(library.viewAvailableBooks()).toEqual([]);
+    });
+
+    it("should not allow borrowing a book that is not available", () => {
+      library.addBook("1234", "Test Book", "Author A", 2020);
+      library.borrowBook("1234");
+      expect(() => library.borrowBook("1234")).toThrow(
+        "Book is currently not available."
+      );
     });
   });
-
 });
