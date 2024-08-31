@@ -28,6 +28,7 @@ interface Book {
         isAvailable: true,
       };
   
+      this.books.set(isbn, newBook);
     }
 
     // View all available books in the library
