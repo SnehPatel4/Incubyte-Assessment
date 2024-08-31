@@ -28,4 +28,12 @@ describe('Library Management System', () => {
         );
     });
   });
+
+  // Test for borrowing books
+  describe('borrowBook', () => {
+    it('should throw an error if the book does not exist', () => {
+      expect(() => library.borrowBook('5678')).toThrow('Book not found.');
+    });
+  });
+
 });
