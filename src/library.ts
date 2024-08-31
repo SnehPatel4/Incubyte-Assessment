@@ -41,9 +41,14 @@ export class Library {
     const book = this.books.get(isbn);
 
     if (!book) {
-        throw new Error('Book not found.');
+      throw new Error("Book not found.");
     }
-  
+
+    if (!book.isAvailable) {
+      throw new Error("Book is currently not available.");
+    }
+
+    book.isAvailable = false;
   }
 
   // View all available books in the library
